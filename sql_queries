@@ -1,0 +1,61 @@
+CREATE DATABASE yoga_wellness;
+use yoga_wellness;
+CREATE TABLE yoga_data (
+user_id INT,
+age INT,
+gender VARCHAR(10),
+city VARCHAR(50),
+occupation VARCHAR(50),
+yoga_type VARCHAR(20),
+duration_minutes INT,
+frequency VARCHAR(20),
+yoga_experience_years FLOAT,
+bmi FLOAT,
+heart_rate_before INT,
+heart_rate_after INT,
+stress_before INT,
+stress_after INT,
+anxiety_level INT,
+sleep_quality INT,
+calories_burned FLOAT,
+mood_score INT
+);
+
+-- Average stress reduction --
+SELECT
+AVG(stress_before - stress_after)
+AS avg_stress_reduction
+FROM yoga_data;
+
+-- Best yoga type --
+SELECT
+yoga_type,
+AVG(stress_before - stress_after)
+AS stress_reduction
+FROM yoga_data
+GROUP BY yoga_type
+ORDER BY stress_reduction DESC;
+
+-- Sleep quality by frequency --
+SELECT
+frequency,
+AVG(sleep_quality)
+AS avg_sleep
+FROM yoga_data
+GROUP BY frequency;
+
+-- Top occupations with highest stress --
+SELECT
+occupation,
+AVG(stress_before)
+AS avg_stress
+FROM yoga_data
+GROUP BY occupation
+ORDER BY avg_stress DESC;
+
+-- Mood by experience --
+SELECT
+ROUND(yoga_experience_years),
+AVG(mood_score)
+FROM yoga_data
+GROUP BY ROUND(yoga_experience_years);
